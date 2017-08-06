@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('garage', (table) => {
       table.increments('id').primary();
       table.string('item');
-      table.text('reason');
+      table.string('reason');
       table.string('cleanliness');
       table.timestamps(true, true);
     })

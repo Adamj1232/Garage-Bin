@@ -37,7 +37,9 @@ app.get('/api/v1/items', (request, response) => {
     })
     .catch(error => {
       console.log(error);
-      response.status(404).send({ error: 'Route not found.' })
+      response.status(404).send({
+        error: 'Route not found.'
+      })
     })
 });
 
@@ -47,16 +49,24 @@ app.post('/api/v1/items', (request, response) => {
     console.log(item);
     database('garage').insert(item, 'id')
       .then(item => {
-        response.status(201).json({ id: item[0] })
+        response.status(201).json({
+          id: item[0]
+        })
       })
-      .catch(error => response.status(500).send({ error: error }))
+      .catch(error => response.status(500).send({
+        error: error
+      }))
   } else {
-    response.status(422).send({ error: 'Unprocessable entity.'})
+    response.status(422).send({
+      error: 'Unprocessable entity.'
+    })
   }
 });
 
 app.patch('/api/v1/items/:id', (request, response) => {
-  const { id } = request.params;
+  const {
+    id
+  } = request.params;
   const updatedItem = request.body;
 
   if (validatePatch(updatedItem)) {
@@ -65,31 +75,39 @@ app.patch('/api/v1/items/:id', (request, response) => {
       .then(item => {
         response.status(201).send('item has been updated.');
       })
-      .catch(error => response.status(500).send({ error: error }))
-    } else {
-      response.status(422).send({ error: 'Unprocessable entity.'});
-    };
+      .catch(error => response.status(500).send({
+        error: error
+      }))
+  } else {
+    response.status(422).send({
+      error: 'Unprocessable entity.'
+    });
+  };
 });
 
 app.delete('/api/v1/items/:id', (request, response) => {
-  const { id } = request.params;
+  const {
+    id
+  } = request.params;
 
   if (!id) {
     console.log('hi');
   }
 
   database('garage').where('id', id).select()
-  .then(item => {
-    if (!item.length) {
-      response.status(404).send('item not found.')
-    } else {
-      database('garage').where('id', id).del()
-      .then(item => {
-        response.status(204).send('item has been deleted.');
-      })
-    }
-  })
-  .catch(error => response.status(500).send({ error: error }));
+    .then(item => {
+      if (!item.length) {
+        response.status(404).send('item not found.')
+      } else {
+        database('garage').where('id', id).del()
+          .then(item => {
+            response.status(204).send('item has been deleted.');
+          })
+      }
+    })
+    .catch(error => response.status(500).send({
+      error: error
+    }));
 });
 
 app.listen(app.get('port'), () => {

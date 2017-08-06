@@ -9,56 +9,58 @@ const $totalCount = $('.item-count--total');
 const getAll = () => {
   clearGarage();
   fetch('/api/v1/items')
-  .then(response => response.json())
-  .then(items => {
-    appendItems(items)
-    updateCounter(items)
-  })
-  .catch(error => console.log(error))
+    .then(response => response.json())
+    .then(items => {
+      appendItems(items)
+      updateCounter(items)
+    })
+    .catch(error => console.log(error))
 }
 
 const addNewItem = (item) => {
   fetch('api/v1/items', {
-    method: 'POST',
-    headers: {'Content-type': 'application/json'},
-    body: JSON.stringify(item)
-  })
-  .then(response => getAll())
-  .catch(error => console.log('error: ', error))
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(item)
+    })
+    .then(response => getAll())
+    .catch(error => console.log('error: ', error))
 }
 
 const deleteItem = (id) => {
   fetch(`/api/v1/items/${id}`, {
-    method: 'DELETE'
-  })
-  .then(() => getAll())
-  .catch(error => console.log(error))
+      method: 'DELETE'
+    })
+    .then(() => getAll())
+    .catch(error => console.log(error))
 }
 
 const updateItem = (id, cleanliness) => {
   fetch(`/api/v1/items/${id}`, {
-    method: 'PATCH',
-    headers: {'Content-type': 'application/json'},
-    body: JSON.stringify(cleanliness)
-  })
-  .then(response => getAll())
-  .catch(error => console.log(error))
+      method: 'PATCH',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(cleanliness)
+    })
+    .then(response => getAll())
+    .catch(error => console.log(error))
 }
 
 const sortItems = (sort) => {
   fetch('/api/v1/items')
-  .then(response => response.json())
-  .then(items => sort(items))
+    .then(response => response.json())
+    .then(items => sort(items))
 }
 
 const sortUp = (items) => {
   const sorted = items.sort((a, b) => {
-    let itemA = a.item.toLowerCase();
-    let itemB = b.item.toLowerCase();
-    if (itemA < itemB) {
+    if (a.item.toLowerCase() < b.item.toLowerCase()) {
       return -1;
     }
-    if (itemA > itemB) {
+    if (a.item.toLowerCase() > b.item.toLowerCase()) {
       return 1;
     }
   });
@@ -68,12 +70,10 @@ const sortUp = (items) => {
 
 const sortDown = (items) => {
   const sorted = items.sort((a, b) => {
-    let itemA = a.item.toLowerCase();
-    let itemB = b.item.toLowerCase();
-    if (itemA < itemB) {
+    if (a.item.toLowerCase() < b.item.toLowerCase()) {
       return 1;
     }
-    if (itemA > itemB) {
+    if (a.item.toLowerCase() > b.item.toLowerCase()) {
       return -1;
     }
   });
@@ -120,7 +120,6 @@ const appendItems = (items) => {
               <option value='rancid'>RANCID</option>
             </select>
           </p>
-          <div class='close'> Close</div>
         </div>
       </article>
     `)
@@ -146,18 +145,18 @@ $('.garage').on('click', '.delete-div', function() {
 })
 
 $('.garage').on('change', '.update-cleanliness', function(e) {
-  const cleanliness = { cleanliness: $(this).prev().text(e.target.value).prevObject[0].value.toUpperCase() }
+  const cleanliness = {
+    cleanliness: $(this).prev().text(e.target.value).prevObject[0].value.toUpperCase()
+  }
   const id = $(this).closest('.item').attr('id');
   console.log(cleanliness);
   updateItem(id, cleanliness);
 });
 
-$('.garage').on('click', '.item-name', function() {
-  $(this).next('.inner-content').addClass('expand');
-})
-
-$('.garage').on('click', '.close', function() {
-  $(this).closest('.inner-content').removeClass('expand');
+$('.garage').on('click', '.item', function() {
+  $(this).children().last().hasClass('expand') ?
+    $(this).children().last().removeClass('expand') :
+    $(this).children().last().addClass('expand');
 })
 
 $('.open-btn').on('click', function() {

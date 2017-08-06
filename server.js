@@ -7,7 +7,6 @@ const path = require('path')
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
-
 const validatePost = (item) => {
   const itemProps = ['item', 'reason', 'cleanliness'];
   const propCheck = itemProps.every(prop => item.hasOwnProperty(prop));
@@ -63,7 +62,9 @@ app.post('/api/v1/items', (request, response) => {
 });
 
 app.patch('/api/v1/items/:id', (request, response) => {
-  const { id } = request.params;
+  const {
+    id
+  } = request.params;
   const updatedItem = request.body;
 
   if (validatePatch(updatedItem)) {
@@ -82,7 +83,9 @@ app.patch('/api/v1/items/:id', (request, response) => {
 });
 
 app.delete('/api/v1/items/:id', (request, response) => {
-  const { id } = request.params;
+  const {
+    id
+  } = request.params;
 
   database('garage').where('id', id).select()
     .then(item => {

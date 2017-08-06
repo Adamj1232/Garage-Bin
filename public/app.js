@@ -142,13 +142,11 @@ $('.garage').on('change', '.update-cleanliness', function(e) {
 });
 
 $('.garage').on('click', '.item', function(e) {
-  if(e.target.className === 'update-cleanliness' ){
+  if (e.target.className === 'update-cleanliness') {
     return
   }
-  $(this).children().last().hasClass('expand')
-    ?
-    $(this).children().last().removeClass('expand')
-    :
+  $(this).children().last().hasClass('expand') ?
+    $(this).children().last().removeClass('expand') :
     $(this).children().last().addClass('expand');
 })
 

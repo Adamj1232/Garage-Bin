@@ -10,8 +10,7 @@ const database = require('knex')(configuration);
 const validatePost = (item) => {
   const itemProps = ['item', 'reason', 'cleanliness'];
   const propCheck = itemProps.every(prop => item.hasOwnProperty(prop));
-  const propLength = Object.keys(item).length === 3;
-  return (propLength && propCheck);
+  return propCheck;
 }
 
 const validatePatch = (item) => {

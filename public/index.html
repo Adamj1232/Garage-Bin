@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Garage Bin</title>
+    <link rel="stylesheet" type="text/css" href="./styles/reset.css">
+    <link rel="stylesheet" type="text/css" href="./styles/main.css">
+  </head>
+  <body>
+    <h1>Garage Bin</h1>
+    <header>
+      <div class="header-btns">
+        <button class="open-btn">Open</button>
+        <button class="close-btn">Close</button>
+      </div>
+    </header>
+    <section class="main-content">
+      <section class="controls">
+        <form class="garage-form">
+          <h3 class="form-title">Store a new item</h3>
+          <input class="item-input--name" type="text" name="item" placeholder="Item"/>
+          <textarea class="item-input--reason" rows="7" type="text" name="reason" placeholder="Reason"></textarea>
+          <select class="item-select" name="cleanliness">
+            <option value="select cleanliness">select cleanliness</option>
+            <option value="sparkling">sparkling</option>
+            <option value="dusty">dusty</option>
+            <option value="rancid">rancid</option>
+          </select>
+          <button class="add-item-btn" type="submit" name="button">Add item</button>
+        </form>
+      </section>
+      <section class="garage">
+        <img class="garage-door" src="./images/garage-door.png" alt="garage door">
+      </section>
+    </section>
+    <div class="footer-btns">
+      <button class="sort-btn">Sort A</button>
+      <button class="sort-btn">Sort Z</button>
+    </div>
+    <div class="item-count-full">
+      <span class="item-count">Total: <span class="item-count--total"></span></span>
+      <span class="item-count">Sparkling: <span class="item-count--sparkling"></span></span>
+      <span class="item-count">Dusty: <span class="item-count--dusty"></span></span>
+      <span class="item-count">Rancid: <span class="item-count--rancid"></span></span>
+    </div>
+    <script src='./jquery.js'></script>
+    <script src='./app.js'></script>
+  </body>
+</html>

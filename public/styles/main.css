@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css?family=Ultra|Open+Sans');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #143315;
+  font-family: 'Open Sans';
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #143315;
+  color: #8da599;
+}
+
+h1 {
+  background-color: #143315;
+  color: #8da599;
+  font-family: 'Ultra';
+  text-align: center;
+  font-size: 2.5em;
+  margin: 30px auto 5px;
+}
+
+.header-btns {
+  display: flex;
+  align-items: center;
+  margin: 20px auto;
+}
+
+.footer-btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 20px auto;
+  max-width: 220px;
+}
+
+.open-btn,
+.close-btn,
+.sort-btn {
+  padding: 5px 10px;
+  margin: 0 10px;
+  border-radius: 5px;
+  background-color: transparent;
+  width: 70px;
+  cursor: pointer;
+}
+
+.open-btn {
+  display: block;
+  border: 2px solid green;
+  color: green;
+}
+
+.close-btn {
+  display: block;
+  border: 2px solid firebrick;
+  color: firebrick;
+}
+
+.open-btn:hover {
+  background-color: green;
+  color: #fff;
+  font-weight: bold;
+}
+
+.close-btn:hover {
+  background-color: firebrick;
+  color: #fff;
+  font-weight: bold;
+}
+
+.sort-btn {
+  background-color: transparent;
+  border: 2px solid #8da599;
+  color: #8da599;
+}
+
+.sort-btn:hover {
+  background-color: #8da599;
+  color: #143315;
+  font-weight: bold;
+}
+
+.item-count-full {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: white;
+  margin: 10px auto;
+  max-width: 360px;
+}
+
+.item-count {
+  display: block;
+  margin: 0 10px;
+}
+
+/*********************
+       GARAGE
+*********************/
+
+.main-content {
+  display: flex;
+  padding: 0 20px;
+  background-color: #8da599;
+}
+
+.garage {
+  position: relative;
+  width: 50%;
+  margin: 20px;
+  border: 25px solid #143315;
+  border-bottom: none;
+  border-radius: 3px;
+  background-image: url('./images/garage.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 380px;
+  overflow: auto;
+  perspective: 50em;
+}
+
+.garage-door {
+  position: absolute;
+  width: 100%;
+  height: 355px;
+  transition: 2s ease;
+  z-index: 3;
+}
+
+.open {
+  position: absolute;
+  top: 0;
+  height: 0;
+  transform: rotateX(40deg);
+}
+
+.controls {
+  width: 48%;
+  margin: 20px;
+  background-color: #143315;
+  border-radius: 3px;
+}
+
+.garage-form {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.garage-form > * {
+  display: block;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.form-title {
+  color: #8da599;
+  font-weight: bold;
+  text-align: center;
+}
+
+.item-input--name,
+.item-input--reason {
+  font-size: .9em;
+  padding: 5px;
+  border: 2px solid #8da599;
+  border-radius: 3px;
+}
+
+.item-select {
+  font-size: .9em;
+  padding: 5px;
+}
+
+.add-item-btn {
+  padding: 10px 0;
+  border-radius: 3px;
+  border-style: none;
+  background-color: #8da599;
+  color: #143315;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.item {
+  position: relative;
+  margin: 25px auto;
+  padding: 15px;
+  width: 85%;
+  background-color: #fff;
+  border-radius: 3px;
+  color: #143315;
+  cursor: pointer;
+}
+
+.inner-content {
+  display: none;
+  transition: all .25s;
+}
+
+.inner-content > * {
+  margin: 10px 0;
+}
+
+.reason {
+  overflow: auto;
+}
+
+.cleanliness {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.expand {
+  display: block;
+}
+
+.delete-btn {
+  position: absolute;
+  padding: 0;
+  top: 5px;
+  right: 5px;
+  background: transparent;
+  border-style: none;
+  cursor: pointer;
+}
+
+.delete {
+  height: 15px;
+  width: 15px;
+}
+
+.up-arrow {
+  position: absolute;
+  bottom: 0;
+  right: 5px;
+  margin: 0;
+  height: 20px;
+  width: 20px;
+}

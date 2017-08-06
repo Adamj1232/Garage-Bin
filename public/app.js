@@ -6,7 +6,7 @@ const $dustyCount = $('.item-count--dusty');
 const $rancidCount = $('.item-count--rancid');
 const $totalCount = $('.item-count--total');
 
-const getAllItems = () => {
+const getAll = () => {
   clearGarage();
   fetch('/api/v1/items')
   .then(response => response.json())
@@ -23,8 +23,16 @@ const addNewItem = (item) => {
     headers: {'Content-type': 'application/json'},
     body: JSON.stringify(item)
   })
-  .then(response => getAllItems())
+  .then(response => getAll())
   .catch(error => console.log('error: ', error))
+}
+
+const deleteItem = (id) => {
+  fetch(`/api/v1/items/${id}`, {
+    method: 'DELETE'
+  })
+  .then(() => getAll())
+  .catch(error => console.log(error))
 }
 
 const updateItem = (id, cleanliness) => {
@@ -33,15 +41,7 @@ const updateItem = (id, cleanliness) => {
     headers: {'Content-type': 'application/json'},
     body: JSON.stringify(cleanliness)
   })
-  .then(response => getAllItems())
-  .catch(error => console.log(error))
-}
-
-const deleteItem = (id) => {
-  fetch(`/api/v1/items/${id}`, {
-    method: 'DELETE'
-  })
-  .then(() => getAllItems())
+  .then(response => getAll())
   .catch(error => console.log(error))
 }
 
@@ -65,6 +65,7 @@ const sortUp = (items) => {
   clearGarage();
   appendItems(sorted);
 }
+
 const sortDown = (items) => {
   const sorted = items.sort((a, b) => {
     let itemA = a.item.toLowerCase();
@@ -81,9 +82,9 @@ const sortDown = (items) => {
 }
 
 const updateCounter = (items) => {
-  const sparklingCount = items.filter(item => item.cleanliness === 'sparkling').length;
-  const dustyCount = items.filter(item => item.cleanliness === 'dusty').length;
-  const rancidCount = items.filter(item => item.cleanliness === 'rancid').length;
+  const sparklingCount = items.filter(item => item.cleanliness === 'SPARKLING').length;
+  const dustyCount = items.filter(item => item.cleanliness === 'DUSTY').length;
+  const rancidCount = items.filter(item => item.cleanliness === 'RANCID').length;
 
   $sparklingCount.text(sparklingCount);
   $dustyCount.text(dustyCount);
@@ -105,30 +106,28 @@ const appendItems = (items) => {
   return items.map(item => {
     $('.garage').append(`
       <article class='item' id='${item.id}'>
-        <button class='delete-btn'>
-          <img class='delete' src='../images/delete.svg' alt='delete button'/>
-        </button>
+        <div class='delete-div'>
+          Delete
+        </div>
         <p class='item-name'>${item.item}</p>
         <div class='inner-content'>
-          <p class='reason'>${item.reason}</p>
-          <p class='cleanliness'>${item.cleanliness}
+          <p class='reason'>Storage Reason: ${item.reason}</p>
+          <p class='cleanliness'>Cleanliness: ${item.cleanliness}
             <select class='update-cleanliness'>
               <option value='update cleanliness'>Update cleanliness</option>
-              <option value='sparkling'>sparkling</option>
-              <option value='dusty'>dusty</option>
-              <option value='rancid'>rancid</option>
+              <option value='sparkling'>SPARKLING</option>
+              <option value='dusty'>DUSTY</option>
+              <option value='rancid'>RANCID</option>
             </select>
           </p>
-          <img class='up-arrow' src='../images/up-arrow.svg' alt='up arrow' />
+          <div class='close'> Close</div>
         </div>
       </article>
     `)
   })
 }
 
-// $(document).on('load', function() {
-  getAllItems();
-// })
+getAll();
 
 $('.add-item-btn').on('click', function(e) {
   e.preventDefault();
@@ -141,24 +140,32 @@ $('.add-item-btn').on('click', function(e) {
   clearInputs();
 });
 
-$('.garage').on('click', '.delete-btn', function() {
+$('.garage').on('click', '.delete-div', function() {
   const id = $(this).closest('.item').attr('id');
   deleteItem(id);
 })
 
 $('.garage').on('change', '.update-cleanliness', function(e) {
-  $(this).prev().text(e.target.value);
-  const cleanliness = { cleanliness: $(this).prev().text() }
+  const cleanliness = { cleanliness: $(this).prev().text(e.target.value).prevObject[0].value.toUpperCase() }
   const id = $(this).closest('.item').attr('id');
+  console.log(cleanliness);
   updateItem(id, cleanliness);
 });
 
+$('.garage').on('click', '.item-name', function() {
+  $(this).next('.inner-content').addClass('expand');
+})
+
+$('.garage').on('click', '.close', function() {
+  $(this).closest('.inner-content').removeClass('expand');
+})
+
 $('.open-btn').on('click', function() {
-  $('.garage-door').addClass('open');
+  $('.door').addClass('open');
 });
 
 $('.close-btn').on('click', function() {
-  $('.garage-door').removeClass('open');
+  $('.door').removeClass('open');
 });
 
 $('.sort-btn').on('click', function() {
@@ -168,11 +175,3 @@ $('.sort-btn').on('click', function() {
     sortItems(sortDown);
   }
 });
-
-$('.garage').on('click', '.item-name', function() {
-  $(this).next('.inner-content').addClass('expand');
-})
-
-$('.garage').on('click', '.up-arrow', function() {
-  $(this).closest('.inner-content').removeClass('expand');
-})

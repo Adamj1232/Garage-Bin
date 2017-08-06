@@ -30,29 +30,28 @@ h1 {
   margin: 30px auto 5px;
 }
 
-.header-btns {
+.garage-controls {
   display: flex;
   align-items: center;
-  margin: 20px auto;
+  margin: 20px auto 10px;
 }
 
 .footer-btns {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  margin: 20px auto;
+  margin: 10px auto;
   max-width: 220px;
 }
 
 .open-btn,
 .close-btn,
 .sort-btn {
-  padding: 5px 10px;
+  padding: 5px 15px;
   margin: 0 10px;
   border-radius: 5px;
   background-color: transparent;
-  width: 70px;
-  cursor: pointer;
+  width: 120px;
 }
 
 .open-btn {
@@ -63,8 +62,8 @@ h1 {
 
 .close-btn {
   display: block;
-  border: 2px solid firebrick;
-  color: firebrick;
+  border: 2px solid #b12525;
+  color: #b12525;
 }
 
 .open-btn:hover {
@@ -74,20 +73,20 @@ h1 {
 }
 
 .close-btn:hover {
-  background-color: firebrick;
+  background-color: #b12525;
   color: #fff;
   font-weight: bold;
 }
 
 .sort-btn {
   background-color: transparent;
-  border: 2px solid #8da599;
-  color: #8da599;
+  border: 2px solid #143315;
+  color: #143315;
 }
 
 .sort-btn:hover {
-  background-color: #8da599;
-  color: #143315;
+  background-color: #143315;
+  color: white;
   font-weight: bold;
 }
 
@@ -105,38 +104,37 @@ h1 {
   margin: 0 10px;
 }
 
-/*********************
-       GARAGE
-*********************/
-
-.main-content {
+.main {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 0 20px;
   background-color: #8da599;
+  width: 97%;
+  margin: 0 auto;
+  border-radius: 5px;
 }
 
 .garage {
   position: relative;
-  width: 50%;
-  margin: 20px;
-  border: 25px solid #143315;
+  width: 100%;
+  margin: 15px;
   border-bottom: none;
   border-radius: 3px;
-  background-image: url('./images/garage.jpg');
-  background-repeat: no-repeat;
-  background-position: center;
+  background: url('./images/garage.jpg') no-repeat center center;
   background-size: cover;
-  height: 380px;
+  height: 420px;
   overflow: auto;
   perspective: 50em;
 }
 
-.garage-door {
+.door {
   position: absolute;
   width: 100%;
-  height: 355px;
-  transition: 2s ease;
-  z-index: 3;
+  height: 100%;
+  transition: 1s ease;
+  z-index: 100;
 }
 
 .open {
@@ -146,8 +144,8 @@ h1 {
   transform: rotateX(40deg);
 }
 
-.controls {
-  width: 48%;
+.form {
+  width: 100%;
   margin: 20px;
   background-color: #143315;
   border-radius: 3px;
@@ -181,6 +179,11 @@ h1 {
 .item-select {
   font-size: .9em;
   padding: 5px;
+}
+
+.item-name:hover {
+  font-weight: bold;
+  color: #317f33;
 }
 
 .add-item-btn {
@@ -227,14 +230,22 @@ h1 {
   display: block;
 }
 
-.delete-btn {
+.delete-div {
   position: absolute;
   padding: 0;
   top: 5px;
-  right: 5px;
+  right: 15px;
+  font-size: .8em;
   background: transparent;
   border-style: none;
   cursor: pointer;
+  border: solid 1px black;
+  padding: 3px 5px;
+}
+
+.delete-div:hover {
+  background-color: #b12525;
+  color: white;
 }
 
 .delete {
@@ -242,10 +253,11 @@ h1 {
   width: 15px;
 }
 
-.up-arrow {
+.close {
+  font-size: .9em;
   position: absolute;
   bottom: 0;
-  right: 5px;
+  right: 20px;
   margin: 0;
   height: 20px;
   width: 20px;

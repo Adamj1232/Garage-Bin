@@ -46,7 +46,6 @@ app.get('/api/v1/items', (request, response) => {
 app.post('/api/v1/items', (request, response) => {
   const item = request.body;
   if (validatePost(item)) {
-    console.log(item);
     database('garage').insert(item, 'id')
       .then(item => {
         response.status(201).json({
@@ -64,13 +63,10 @@ app.post('/api/v1/items', (request, response) => {
 });
 
 app.patch('/api/v1/items/:id', (request, response) => {
-  const {
-    id
-  } = request.params;
+  const { id } = request.params;
   const updatedItem = request.body;
 
   if (validatePatch(updatedItem)) {
-    console.log(updatedItem);
     database('garage').where('id', id).update(updatedItem)
       .then(item => {
         response.status(201).send('item has been updated.');
@@ -86,13 +82,7 @@ app.patch('/api/v1/items/:id', (request, response) => {
 });
 
 app.delete('/api/v1/items/:id', (request, response) => {
-  const {
-    id
-  } = request.params;
-
-  if (!id) {
-    console.log('hi');
-  }
+  const { id } = request.params;
 
   database('garage').where('id', id).select()
     .then(item => {

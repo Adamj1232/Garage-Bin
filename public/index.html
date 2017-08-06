@@ -13,35 +13,37 @@
 
 <body>
   <h1>Garage Bin</h1>
-  <header>
-  </header>
   <section class="main">
     <div class="garage-controls">
-      <button class="open-btn">Open Garage</button>
-      <button class="close-btn">Close Garage</button>
+      <button class="garage-btn garage-open">Open Garage</button>
     </div>
+
     <section class="garage">
       <img class="door"
            src="./styles/images/door1.jpg">
     </section>
+
     <div class="footer-btns">
       <button class="sort-btn">Sort A-Z</button>
-      <button class="sort-btn">Sort Z-A</button>
     </div>
-    <div class="item-count-full">
-      <span class="item-count">Total: <span class="item-count--total"></span></span>
-      <span class="item-count">Sparkling: <span class="item-count--sparkling"></span></span>
-      <span class="item-count">Dusty: <span class="item-count--dusty"></span></span>
-      <span class="item-count">Rancid: <span class="item-count--rancid"></span></span>
-    </div>
+
+    <section class="item-count-full">
+      <div class="item-count-types">
+        <span class="item-count">Sparkling: <span class="count-sparkling"></span></span>
+        <span class="item-count">Dusty: <span class="count-dusty"></span></span>
+        <span class="item-count">Rancid: <span class="count-rancid"></span></span>
+      </div>
+      <span class="item-count full-count">Total: <span class="count-total"></span></span>
+    </section>
+
     <section class="form">
       <form class="garage-form">
         <h3 class="form-title">Store a new item</h3>
-        <input class="item-input--name"
+        <input class="input-name"
                type="text"
                name="item"
                placeholder="Item" />
-        <input class="item-input--reason"
+        <input class="input-reason"
                type="text"
                name="reason"
                placeholder="Reason"></input>
@@ -52,14 +54,16 @@
         <option value="DUSTY">DUSTY</option>
         <option value="RANCID">RANCID</option>
       </select>
-        <button class="add-item-btn"
+        <button class="add-item"
                 type="submit"
                 name="button">Add item</button>
       </form>
     </section>
   </section>
+
   <script src='./jquery.js'></script>
   <script src='./app.js'></script>
+
 </body>
 
 </html>

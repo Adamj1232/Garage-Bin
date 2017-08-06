@@ -1,10 +1,13 @@
-const $itemName = $('.item-input--name');
-const $itemReason = $('.item-input--reason');
+const $itemName = $('.input-name');
 const $itemCleanliness = $('.item-select');
-const $sparklingCount = $('.item-count--sparkling');
-const $dustyCount = $('.item-count--dusty');
-const $rancidCount = $('.item-count--rancid');
-const $totalCount = $('.item-count--total');
+const $itemReason = $('.input-reason');
+const $dustyCount = $('.count-dusty');
+const $totalCount = $('.count-total');
+const $rancidCount = $('.count-rancid');
+const $sparklingCount = $('.count-sparkling');
+
+let sortType = 'none'
+let garageStatus = 'closed'
 
 const getAll = () => {
   clearGarage();
@@ -17,7 +20,7 @@ const getAll = () => {
     .catch(error => console.log(error))
 }
 
-const addNewItem = (item) => {
+const addItem = (item) => {
   fetch('api/v1/items', {
       method: 'POST',
       headers: {
@@ -49,42 +52,28 @@ const updateItem = (id, cleanliness) => {
     .catch(error => console.log(error))
 }
 
-const sortItems = (sort) => {
-  fetch('/api/v1/items')
-    .then(response => response.json())
-    .then(items => sort(items))
-}
-
-const sortUp = (items) => {
-  const sorted = items.sort((a, b) => {
-    if (a.item.toLowerCase() < b.item.toLowerCase()) {
-      return -1;
-    }
-    if (a.item.toLowerCase() > b.item.toLowerCase()) {
-      return 1;
-    }
-  });
-  clearGarage();
-  appendItems(sorted);
-}
-
-const sortDown = (items) => {
-  const sorted = items.sort((a, b) => {
-    if (a.item.toLowerCase() < b.item.toLowerCase()) {
-      return 1;
-    }
-    if (a.item.toLowerCase() > b.item.toLowerCase()) {
-      return -1;
-    }
-  });
-  clearGarage();
-  appendItems(sorted);
+const sortAll = (items) => {
+  if (sortType === 'none' || sortType === 'down') {
+    const sorted = items.sort((a, b) => {
+      return a.item.toLowerCase() < b.item.toLowerCase()
+    });
+    clearGarage();
+    appendItems(sorted);
+    sortType = 'up'
+  } else {
+    const sorted = items.sort((a, b) => {
+      return a.item.toLowerCase() > b.item.toLowerCase()
+    });
+    clearGarage();
+    appendItems(sorted);
+    sortType = 'down'
+  }
 }
 
 const updateCounter = (items) => {
-  const sparklingCount = items.filter(item => item.cleanliness === 'SPARKLING').length;
-  const dustyCount = items.filter(item => item.cleanliness === 'DUSTY').length;
   const rancidCount = items.filter(item => item.cleanliness === 'RANCID').length;
+  const dustyCount = items.filter(item => item.cleanliness === 'DUSTY').length;
+  const sparklingCount = items.filter(item => item.cleanliness === 'SPARKLING').length;
 
   $sparklingCount.text(sparklingCount);
   $dustyCount.text(dustyCount);
@@ -93,8 +82,8 @@ const updateCounter = (items) => {
 }
 
 const clearInputs = () => {
-  $itemName.val('');
   $itemReason.val('');
+  $itemName.val('');
   $itemCleanliness.val('select cleanliness');
 }
 
@@ -128,14 +117,14 @@ const appendItems = (items) => {
 
 getAll();
 
-$('.add-item-btn').on('click', function(e) {
+$('.add-item').on('click', function(e) {
   e.preventDefault();
   const item = {
     item: $itemName.val(),
     reason: $itemReason.val(),
     cleanliness: $itemCleanliness.val()
   }
-  addNewItem(item);
+  addItem(item);
   clearInputs();
 });
 
@@ -149,18 +138,34 @@ $('.garage').on('change', '.update-cleanliness', function(e) {
     cleanliness: $(this).prev().text(e.target.value).prevObject[0].value.toUpperCase()
   }
   const id = $(this).closest('.item').attr('id');
-  console.log(cleanliness);
   updateItem(id, cleanliness);
 });
 
-$('.garage').on('click', '.item', function() {
-  $(this).children().last().hasClass('expand') ?
-    $(this).children().last().removeClass('expand') :
+$('.garage').on('click', '.item', function(e) {
+  if(e.target.className === 'update-cleanliness' ){
+    return
+  }
+  $(this).children().last().hasClass('expand')
+    ?
+    $(this).children().last().removeClass('expand')
+    :
     $(this).children().last().addClass('expand');
 })
 
-$('.open-btn').on('click', function() {
-  $('.door').addClass('open');
+$('.garage-btn').on('click', function() {
+  if (garageStatus === 'closed') {
+    $('.door').addClass('open')
+    garageStatus = 'open'
+    $(this).addClass('garage-closed')
+    $(this).text('Close Garage')
+    $(this).removeClass('garage-open')
+  } else {
+    $('.door').removeClass('open')
+    garageStatus = 'closed'
+    $(this).addClass('garage-open')
+    $(this).text('Open Garage')
+    $(this).removeClass('garage-closed')
+  }
 });
 
 $('.close-btn').on('click', function() {
@@ -168,9 +173,12 @@ $('.close-btn').on('click', function() {
 });
 
 $('.sort-btn').on('click', function() {
-  if ($(this).text() === 'Sort A') {
-    sortItems(sortUp);
+  if ($(this).text() === 'Sort A-Z') {
+    $(this).text('Sort Z-A')
   } else {
-    sortItems(sortDown);
+    $(this).text('Sort A-Z')
   }
+  fetch('/api/v1/items')
+    .then(response => response.json())
+    .then(items => sortAll(items))
 });

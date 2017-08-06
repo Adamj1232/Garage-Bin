@@ -119,6 +119,9 @@ getAll();
 
 $('.add-item').on('click', function(e) {
   e.preventDefault();
+  if( !$itemName.val() || !$itemReason.val() || !$itemCleanliness.val()){
+    return alert('Please Enter All Fields');
+  }
   const item = {
     item: $itemName.val(),
     reason: $itemReason.val(),
@@ -145,8 +148,10 @@ $('.garage').on('click', '.item', function(e) {
   if (e.target.className === 'update-cleanliness') {
     return
   }
-  $(this).children().last().hasClass('expand') ?
-    $(this).children().last().removeClass('expand') :
+  $(this).children().last().hasClass('expand')
+    ?
+    $(this).children().last().removeClass('expand')
+    :
     $(this).children().last().addClass('expand');
 })
 

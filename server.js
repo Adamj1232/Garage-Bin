@@ -11,7 +11,7 @@ const validatePost = (item) => {
   const itemProps = ['item', 'reason', 'cleanliness'];
   const propCheck = itemProps.every(prop => item.hasOwnProperty(prop));
   const propLength = Object.keys(item).length === 3;
-  return (propCheck && propLength);
+  return (propLength && propCheck);
 }
 
 const validatePatch = (item) => {

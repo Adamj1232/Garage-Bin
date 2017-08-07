@@ -55,14 +55,14 @@ const updateItem = (id, cleanliness) => {
 const sortAll = (items) => {
   if (sortType === 'none' || sortType === 'down') {
     const sorted = items.sort((a, b) => {
-      return a.item.toLowerCase() < b.item.toLowerCase()
+      return a.item.toLowerCase() > b.item.toLowerCase()
     });
     clearGarage();
     appendItems(sorted);
     sortType = 'up'
   } else {
     const sorted = items.sort((a, b) => {
-      return a.item.toLowerCase() > b.item.toLowerCase()
+      return a.item.toLowerCase() < b.item.toLowerCase()
     });
     clearGarage();
     appendItems(sorted);

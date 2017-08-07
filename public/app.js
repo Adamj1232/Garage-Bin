@@ -175,7 +175,7 @@ $('.close-btn').on('click', function() {
   $('.door').removeClass('open');
 });
 
-$('.sort-btn').on('click', a() {
+$('.sort-btn').on('click', function() {
   if ($(this).text() === 'Sort A-Z') {
     $(this).text('Sort Z-A')
   } else {

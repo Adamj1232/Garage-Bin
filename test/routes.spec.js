@@ -30,9 +30,9 @@ describe('Garage Bin Tests', () => {
         response.should.be.json;
         response.body.should.be.a('array');
         response.body.length.should.equal(4);
-        response.body[0].should.have.property('item');
-        response.body[0].should.have.property('reason');
         response.body[0].should.have.property('cleanliness');
+        response.body[0].should.have.property('reason');
+        response.body[0].should.have.property('item');
         done();
       });
     });
@@ -55,8 +55,8 @@ describe('Garage Bin Tests', () => {
       .post('/api/v1/items')
       .send({ item: 'dogs', reason: 'sprayed by a skunk', cleanliness: 'rancid' })
       .end((error, response) => {
-        response.should.have.status(201);
         response.should.be.json;
+        response.should.have.status(201);
         response.body.should.be.a('object');
         chai.request(server)
         .get('/api/v1/items')
